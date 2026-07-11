@@ -27,6 +27,7 @@ jobs:
         run: |
           rm -rf package-lock.json node_modules
           npm install
+          npm install @tailwindcss/oxide-darwin-arm64 @tailwindcss/oxide-darwin-x64 @tailwindcss/oxide-win32-x64-msvc --no-save
 
       - name: Build and Release App
         env:
