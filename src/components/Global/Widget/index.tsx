@@ -47,16 +47,22 @@ const Widget = () => {
           <Loader />
         </div>
       </ClerkLoading>
-      <SignedIn>{profile ? (
-        <MediaConfiguration
-          state={state}
-          user={profile.user}
-        />
-      ) : (
-        <div className='w-full h-full flex justify-center items-center'>
-          <Loader color='#fff' />
-        </div>
-      )}</SignedIn>
+      <SignedIn>
+        {!profile ? (
+          <div className='w-full h-full flex justify-center items-center'>
+            <Loader color='#fff' />
+          </div>
+        ) : profile.user ? (
+          <MediaConfiguration
+            state={state}
+            user={profile.user}
+          />
+        ) : (
+          <div className="w-full h-full flex justify-center items-center text-red-500">
+            Error loading user profile. Please check if backend is running.
+          </div>
+        )}
+      </SignedIn>
     </div>
   )
 }

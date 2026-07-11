@@ -1,7 +1,7 @@
 import { cn, onCloseApp } from '@/lib/utils'
 import { UserButton } from '@clerk/clerk-react'
 import { X } from 'lucide-react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 type Props = {
   children: React.ReactNode
@@ -11,17 +11,23 @@ type Props = {
 const ControlLayout = ({ children, className }: Props) => {
   const [isVisible, setIsVisible] = useState<boolean>(false)
 
-  window.ipcRenderer.on('hide-plugin', (event, payload) => {
-    console.log(event)
-    setIsVisible(payload.state)
-  })
+  useEffect(() => {
+    const handler = (_event: any, payload: { state: boolean }) => {
+      console.log('hide-plugin received:', payload)
+      setIsVisible(payload.state)
+    }
+    window.ipcRenderer.on('hide-plugin', handler)
+    return () => {
+      window.ipcRenderer.off('hide-plugin', handler)
+    }
+  }, [])
 
   return (
     <div
       className={cn(
         className,
         isVisible && 'invisible',
-        'bg-[#171717] border-2 border-neutral-700 flex px-1 flex-col rounded-3xl overflow-hidden'
+        'bg-neutral-900 border-2 border-neutral-700 flex px-1 flex-col rounded-3xl overflow-hidden h-screen w-full'
       )}
     >
       <div className="flex justify-between items-center p-5 draggable">

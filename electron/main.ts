@@ -106,7 +106,24 @@ function createWindow() {
     }
   })
 
+  // Debug: log what we're loading
+  studio.webContents.on('did-fail-load', (_e, code, desc, url) => {
+    console.error(`[studio] failed to load: ${url} — ${code} ${desc}`)
+  })
+  floatingWebCam.webContents.on('did-fail-load', (_e, code, desc, url) => {
+    console.error(`[webcam] failed to load: ${url} — ${code} ${desc}`)
+  })
+  studio.webContents.on('render-process-gone', (_e, details) => {
+    console.error('[studio] render process gone:', details)
+  })
+  floatingWebCam.webContents.on('render-process-gone', (_e, details) => {
+    console.error('[webcam] render process gone:', details)
+  })
+
   if (VITE_DEV_SERVER_URL) {
+    console.log('[main] VITE_DEV_SERVER_URL:', VITE_DEV_SERVER_URL)
+    console.log('[main] studio URL:', `${VITE_DEV_SERVER_URL}src/studio.html`)
+    console.log('[main] webcam URL:', `${VITE_DEV_SERVER_URL}src/webcam.html`)
     win.loadURL(VITE_DEV_SERVER_URL)
     studio.loadURL(`${import.meta.env.VITE_APP_URL}/src/studio.html`)
     floatingWebCam.loadURL(`${import.meta.env.VITE_APP_URL}/src/webcam.html`)
@@ -165,6 +182,7 @@ ipcMain.on('resize-studio', (_event, payload) => {
 
 ipcMain.on('hide-plugin', (_event, payload) => {
   win?.webContents.send('hide-plugin', payload)
+  win?.setIgnoreMouseEvents(payload.state)
 })
 
 app.on('activate', () => {

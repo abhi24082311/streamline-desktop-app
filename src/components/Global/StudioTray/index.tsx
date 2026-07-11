@@ -62,73 +62,70 @@ const StudioTray = () => {
         window.ipcRenderer.send('resize-studio', { shrink: !preview })
     }, [preview])
 
-    return !onSources ? (
-        <></>
-    ) : (
-        (
-            <div className="flex flex-col justify-end gap-y-5 h-screen ">
-                {preview && (
-                    <video
-                        autoPlay
-                        ref={videoElement}
-                        className={cn('w-6/12 self-end')}
-                    ></video>
-                )}
-                <div className="rounded-full flex justify-around items-center h-12 w-full border border-neutral-700 bg-[#171717] draggable px-4">
-                    <div {...(onSources && {
-                        onClick: () => {
-                            setRecording(!recording)
-                            if (recording) {
-                                clearTime()
-                                onStopRecording()
-                            } else {
-                                StartRecording(onSources)
-                            }
-                        },
-                    })}
-                        className={cn(
-                            'non-draggable rounded-full flex items-center justify-center cursor-pointer relative hover:opacity-80',
-                            recording ? 'bg-red-500 w-4 h-4' : 'bg-red-400 w-6 h-6'
-                        )}
-                    >
-                        {recording && (
-                            <Square
-                                size={8}
-                                fill="white"
-                                className="text-white"
-                                stroke="white"
-                            />
-                        )}
-                    </div>
-
-                    <span className="text-white text-xs font-mono non-draggable">{onTimer}</span>
-
-                    {!recording ? (
-                        <Pause
-                            className="non-draggable opacity-50"
-                            size={20}
+    return (
+        <div className="flex flex-col justify-end gap-y-5 h-screen ">
+            {preview && onSources && (
+                <video
+                    autoPlay
+                    ref={videoElement}
+                    className={cn('w-6/12 self-end')}
+                ></video>
+            )}
+            <div className="rounded-full flex justify-around items-center h-12 w-full border border-neutral-700 bg-[#171717] draggable px-4">
+                <div {...(onSources && {
+                    onClick: () => {
+                        setRecording(!recording)
+                        if (recording) {
+                            clearTime()
+                            onStopRecording()
+                        } else {
+                            StartRecording(onSources)
+                        }
+                    },
+                })}
+                    className={cn(
+                        'non-draggable rounded-full flex items-center justify-center cursor-pointer relative hover:opacity-80',
+                        recording ? 'bg-red-500 w-4 h-4' : 'bg-red-400 w-6 h-6',
+                        !onSources && 'opacity-50 cursor-not-allowed'
+                    )}
+                >
+                    {recording && (
+                        <Square
+                            size={8}
                             fill="white"
-                            stroke="none"
-                        />
-                    ) : (
-                        <Pause
-                            className="non-draggable cursor-pointer hover:opacity-80"
-                            size={20}
-                            fill="white"
-                            stroke="none"
+                            className="text-white"
+                            stroke="white"
                         />
                     )}
+                </div>
 
-                    <Cast
-                        onClick={() => setPreview((prev) => !prev)}
+                <span className="text-white text-xs font-mono non-draggable">{onTimer}</span>
+
+                {!recording ? (
+                    <Pause
+                        className="non-draggable opacity-50"
                         size={20}
                         fill="white"
-                        className="non-draggable cursor-pointer hover:opacity-60"
-                        stroke="white"
+                        stroke="none"
                     />
-                </div>
+                ) : (
+                    <Pause
+                        className="non-draggable cursor-pointer hover:opacity-80"
+                        size={20}
+                        fill="white"
+                        stroke="none"
+                    />
+                )}
+
+                <Cast
+                    onClick={() => setPreview((prev) => !prev)}
+                    size={20}
+                    fill="white"
+                    className="non-draggable cursor-pointer hover:opacity-60"
+                    stroke="white"
+                />
             </div>
-        )
+        </div>
     )
 }
 
