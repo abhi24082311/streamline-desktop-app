@@ -1,4 +1,4 @@
-import { app, BrowserWindow, desktopCapturer, ipcMain } from 'electron'
+import { app, BrowserWindow, desktopCapturer, ipcMain, session } from 'electron'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import express from 'express'
@@ -136,7 +136,7 @@ function createWindow() {
     serverApp.use(express.static(RENDERER_DIST))
     const server = serverApp.listen(0, 'localhost', () => {
       const port = (server.address() as any).port
-      win?.loadURL(`http://localhost:${port}/index.html`)
+      win?.loadURL(`http://localhost:${port}/`)
       studio?.loadURL(`http://localhost:${port}/src/studio.html`)
       floatingWebCam?.loadURL(`http://localhost:${port}/src/webcam.html`)
     })
@@ -202,6 +202,7 @@ app.on('activate', () => {
 })
 
 app.whenReady().then(() => {
-  app.userAgentFallback = app.userAgentFallback.replace(/Electron\/\S*\s/, "")
+  const customUserAgent = session.defaultSession.getUserAgent().replace(/Electron\/\S*\s/, "")
+  session.defaultSession.setUserAgent(customUserAgent)
   createWindow()
 })
