@@ -29,10 +29,10 @@ let latestSources: any = null
 
 function createWindow() {
   win = new BrowserWindow({
-    width: 250,
-    height: 280,
-    minHeight: 200,
-    minWidth: 200,
+    width: 400,
+    height: 600,
+    minHeight: 600,
+    minWidth: 400,
     frame: false,
     transparent: true,
     alwaysOnTop: true,
