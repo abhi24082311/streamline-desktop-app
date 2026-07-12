@@ -7,6 +7,13 @@
   "directories": {
     "output": "release/${version}"
   },
+  "publish": [
+    {
+      "provider": "github",
+      "owner": "abhi24082311",
+      "repo": "streamline-desktop-app"
+    }
+  ],
   "files": [
     "dist",
     "dist-electron"

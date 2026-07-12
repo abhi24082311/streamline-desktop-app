@@ -6,8 +6,13 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build && electron-builder",
+    "build:release": "tsc && vite build && electron-builder --publish always",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/abhi24082311/streamline-desktop-app.git"
   },
   "dependencies": {
     "@base-ui/react": "^1.5.0",
