@@ -134,11 +134,11 @@ function createWindow() {
   } else {
     const serverApp = express()
     serverApp.use(express.static(RENDERER_DIST))
-    const server = serverApp.listen(0, '127.0.0.1', () => {
+    const server = serverApp.listen(0, 'localhost', () => {
       const port = (server.address() as any).port
-      win?.loadURL(`http://127.0.0.1:${port}/index.html`)
-      studio?.loadURL(`http://127.0.0.1:${port}/src/studio.html`)
-      floatingWebCam?.loadURL(`http://127.0.0.1:${port}/src/webcam.html`)
+      win?.loadURL(`http://localhost:${port}/index.html`)
+      studio?.loadURL(`http://localhost:${port}/src/studio.html`)
+      floatingWebCam?.loadURL(`http://localhost:${port}/src/webcam.html`)
     })
   }
 }
