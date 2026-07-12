@@ -201,4 +201,7 @@ app.on('activate', () => {
   }
 })
 
-app.whenReady().then(createWindow)
+app.whenReady().then(() => {
+  app.userAgentFallback = app.userAgentFallback.replace(/Electron\/\S*\s/, "")
+  createWindow()
+})

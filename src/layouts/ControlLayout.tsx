@@ -2,6 +2,7 @@ import { cn, onCloseApp } from '@/lib/utils'
 import { UserButton } from '@clerk/clerk-react'
 import { X } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
+import opalLogo from '@/assets/opal-logo.svg'
 
 type Props = {
   children: React.ReactNode
@@ -45,7 +46,7 @@ const ControlLayout = ({ children, className }: Props) => {
       </div>
       <div className="p-5 flex w-full">
           <div className="flex items-center gap-x-2">
-            <img src="/opal-logo.svg" alt="app logo" className="h-10 w-10 object-contain" />
+            <img src={opalLogo} alt="app logo" className="h-10 w-10 object-contain" />
             <p className="text-white text-lg font-semibold">Streamline</p>
           </div>
         </div>
