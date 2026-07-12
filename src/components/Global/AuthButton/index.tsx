@@ -4,7 +4,7 @@ import { SignedOut, SignInButton, SignUpButton } from '@clerk/clerk-react'
 const AuthButton = () => {
   return (
     <SignedOut>
-      <div className="flex gap-x-3 h-screen justify-center items-center">
+      <div className="flex gap-x-3 h-full justify-center items-center">
         <SignInButton mode="modal">
           <Button
             variant="outline"
