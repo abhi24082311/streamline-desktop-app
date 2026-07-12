@@ -1,6 +1,7 @@
 import { app, BrowserWindow, desktopCapturer, ipcMain } from 'electron'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
+import express from 'express'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -128,10 +129,14 @@ function createWindow() {
     studio.loadURL(`${import.meta.env.VITE_APP_URL}/src/studio.html`)
     floatingWebCam.loadURL(`${import.meta.env.VITE_APP_URL}/src/webcam.html`)
   } else {
-    // win.loadFile('dist/index.html')
-    win.loadFile(path.join(RENDERER_DIST, 'index.html'))
-    studio.loadFile(path.join(RENDERER_DIST, 'src', 'studio.html'))
-    floatingWebCam.loadFile(path.join(RENDERER_DIST, 'src', 'webcam.html'))
+    const serverApp = express()
+    serverApp.use(express.static(RENDERER_DIST))
+    const server = serverApp.listen(0, '127.0.0.1', () => {
+      const port = (server.address() as any).port
+      win?.loadURL(`http://127.0.0.1:${port}/index.html`)
+      studio?.loadURL(`http://127.0.0.1:${port}/src/studio.html`)
+      floatingWebCam?.loadURL(`http://127.0.0.1:${port}/src/webcam.html`)
+    })
   }
 }
 
