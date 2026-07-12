@@ -42,6 +42,7 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
+      webSecurity: false,
       devTools: true,
       preload: path.join(__dirname, 'preload.mjs'),
     },
@@ -62,6 +63,7 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
+      webSecurity: false,
       devTools: true,
       preload: path.join(__dirname, 'preload.mjs'),
     },
@@ -82,6 +84,7 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
+      webSecurity: false,
       devTools: true,
       preload: path.join(__dirname, 'preload.mjs'),
     },

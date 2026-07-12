@@ -37,7 +37,13 @@ const Widget = () => {
   console.log(state)
   useEffect(() => {
     if (user && user.id) {
-      fetchUserProfile(user.id).then((p) => setProfile(p))
+      fetchUserProfile(user.id)
+        .then((p) => setProfile(p))
+        .catch((err) => {
+          console.error("Failed to fetch user profile:", err)
+          // Set a dummy profile with error status to exit the loading state
+          setProfile({ status: 500, user: null })
+        })
     }
   }, [user])
   return (
